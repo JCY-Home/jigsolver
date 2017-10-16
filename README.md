@@ -3,7 +3,7 @@ A simple jigsaw solver app in Vue.js
 
 #### setup:
 1) clone the repo
-`git clone https://github.com/JCY-Home/jigsolver.git jigsolver`
+```git clone https://github.com/JCY-Home/jigsolver.git jigsolver```
 
 2) install dependencies
 ```
