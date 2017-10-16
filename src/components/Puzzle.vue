@@ -10,6 +10,11 @@
 <script>
 export default {
 	name: 'Puzzle',
+	data() {
+		return {
+			isAdjacent: false
+		}
+	},
 	methods: {
 		getOffset(el) {
 			el = el.getBoundingClientRect();
@@ -22,10 +27,11 @@ export default {
 			var blank = document.querySelector('.blank'),
 			    clicked = e.target,
 			    blankOffset = this.getOffset(blank).top + this.getOffset(blank).left,
-			    clickedOffset = this.getOffset(clicked).top + this.getOffset(clicked).left;
-			console.log(blankOffset + ", " + clickedOffset + ", " + (blankOffset - clickedOffset));
-			var distance = (blankOffset - clickedOffset) < 260 ? 'adjacent' : 'far';
-			console.log(distance);
+			    clickedOffset = this.getOffset(clicked).top + this.getOffset(clicked).left,
+			    distance = (blankOffset - clickedOffset) < 260 ? this.isAdjacent = true : this.isAdjacent = false;
+			if(this.isAdjacent) {
+				console.log('it worked');
+			}
 		}
 	}
 }
