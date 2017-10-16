@@ -30,7 +30,9 @@ export default {
 			    clickedOffset = this.getOffset(clicked).top + this.getOffset(clicked).left,
 			    distance = (blankOffset - clickedOffset) < 260 ? this.isAdjacent = true : this.isAdjacent = false;
 			if(this.isAdjacent) {
-				console.log('it worked');
+				console.log('adjacent');
+			} else {
+				console.log('not adjacent');
 			}
 		}
 	}
