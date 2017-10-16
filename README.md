@@ -2,25 +2,25 @@
 A simple jigsaw solver app in Vue.js
 
 #### setup:
-1) clone the repo
+1. clone the repo
 
 `git clone https://github.com/JCY-Home/jigsolver.git jigsolver`
 
-2) install dependencies
+1. install dependencies
 
 ```
 cd jigsolver/
 sudo npm install
 ```
 
-3) for development:
+1. for development:
 
 `npm run dev`
 
-this will serve the page at *localhost:8080* by default.
-all assets for dev live in the *src/* folder.
+this will serve the page at **localhost:8080** by default.
+all assets for dev live in the `src/` folder.
 
-4) for deployment:
+for deployment:
 
 `npm run build`
 
