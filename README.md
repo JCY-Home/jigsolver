@@ -6,14 +6,14 @@ A simple jigsaw solver app in Vue.js
 
 `git clone https://github.com/JCY-Home/jigsolver.git jigsolver`
 
-1. install dependencies
+2. install dependencies
 
 ```
 cd jigsolver/
 sudo npm install
 ```
 
-1. for development:
+3. for development:
 
 `npm run dev`
 
