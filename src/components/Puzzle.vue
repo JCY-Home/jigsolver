@@ -6,8 +6,8 @@
 			</div>
 		</draggable> -->
 		<div class="board">
-			<draggable v-model="puzzle" :options="{draggable:'.dragger'}">
-				<div v-for="piece in puzzle" :key="piece.id" class="dragger">
+			<draggable v-model="layout" :options="{draggable:'.puzzlePiece'}">
+				<div v-for="piece in layout" :key="piece.id" class="puzzlePiece">
 					<img :src="piece"/>
 				</div>
 			</draggable>
@@ -22,7 +22,7 @@ export default {
 	name: 'Puzzle',
 	data() {
 		return {
-			puzzle: [],
+			layout: [],
 		}
 	},
 	methods: {
@@ -35,8 +35,7 @@ export default {
 			puzzleArr = puzzleArr.sort(function() {
 	            return Math.random() - 0.5;
 	        });
-				
-	        this.puzzle = puzzleArr;
+			this.layout = puzzleArr;
 		},
 	},
 	beforeMount() {
@@ -49,18 +48,15 @@ export default {
 </script>
 
 <style scoped>
-.item {
-	border: 1px solid #efefef;
-	width: 20%;
-	margin: 10px auto;
-}
-.board {
+.puzzle {
 	width: 980px;
-	column-count: 4;
 	border: 1px solid #000;
 	background-color: #808080;
 	padding: 20px;
 	margin: 0 auto;
+}
+.board {
+	column-count: 4;
 }
 .board img {
 	margin-bottom: 10px;
@@ -72,10 +68,4 @@ export default {
 .board img:hover {
 	transform: translateY(-10px);
 }
-/*.blank {
-	display: inline-block;
-	background-color: red;
-	width: 225px;
-	height: 225px;
-}*/
 </style>
