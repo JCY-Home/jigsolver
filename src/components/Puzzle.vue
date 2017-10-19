@@ -11,6 +11,7 @@
 					<img :src="piece"/>
 				</div>
 			</draggable>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 </template>
@@ -29,7 +30,7 @@ export default {
 		render() {
 			var puzzleArr = [],
 			    i = 1;
-			for(i; i < 16; i++) {
+			for(i; i < 17; i++) {
 				puzzleArr.push("../static/pieces/piece"+i+".png");
 			}
 			puzzleArr = puzzleArr.sort(function() {
@@ -55,8 +56,9 @@ export default {
 	padding: 20px;
 	margin: 0 auto;
 }
-.board {
-	column-count: 4;
+.puzzlePiece {
+	float: left;
+	margin-right: 20px;
 }
 .board img {
 	margin-bottom: 10px;
@@ -67,5 +69,9 @@ export default {
 }
 .board img:hover {
 	transform: translateY(-10px);
+}
+.clearfix {
+	display: table;
+	clear: both;
 }
 </style>
