@@ -6,12 +6,12 @@
 			</div>
 		</draggable> -->
 		<div class="board">
-			<draggable :options="{draggable:'.piece'}">
-				<img v-for="n in 15" :src="require('@/assets/pieces/' + 'piece' + n + '.png')" class="piece"/>
-				<span class="piece blank"></span>
+			<draggable v-model="puzzle" :options="{draggable:'.dragger'}">
+				<div v-for="piece in puzzle" :key="piece.id" class="dragger">
+					<img :src="piece"/>
+				</div>
 			</draggable>
 		</div>
-		
 	</div>
 </template>
 
@@ -22,46 +22,25 @@ export default {
 	name: 'Puzzle',
 	data() {
 		return {
-			isAdjacent: false,
-			myArray: [
-				{
-					"name": 'justin',
-					"order": 1,
-					"fixed": false
-				},
-				{
-					"name": 'camille',
-					"order": 3,
-					"fixed": false
-				},
-				{
-					"name": 'nick',
-					"order": 2,
-					"fixed": false
-				}
-			],
+			puzzle: [],
 		}
 	},
 	methods: {
-		getOffset(el) {
-			el = el.getBoundingClientRect();
-			return {
-				left: el.left + window.scrollX,
-				top: el.top + window.scrollY
+		render() {
+			var puzzleArr = [],
+			    i = 1;
+			for(i; i < 16; i++) {
+				puzzleArr.push("../static/pieces/piece"+i+".png");
 			}
+			puzzleArr = puzzleArr.sort(function() {
+	            return Math.random() - 0.5;
+	        });
+				
+	        this.puzzle = puzzleArr;
 		},
-		trigger(e) {
-			var blank = document.querySelector('.blank'),
-			    clicked = e.target,
-			    blankOffset = this.getOffset(blank).top + this.getOffset(blank).left,
-			    clickedOffset = this.getOffset(clicked).top + this.getOffset(clicked).left,
-			    distance = (blankOffset - clickedOffset) < 260 ? this.isAdjacent = true : this.isAdjacent = false;
-			if(this.isAdjacent) {
-				console.log('adjacent');
-			} else {
-				console.log('not adjacent');
-			}
-		}
+	},
+	beforeMount() {
+		this.render()
 	},
 	components: {
 		draggable,
@@ -93,10 +72,10 @@ export default {
 .board img:hover {
 	transform: translateY(-10px);
 }
-.blank {
+/*.blank {
 	display: inline-block;
 	background-color: red;
 	width: 225px;
 	height: 225px;
-}
+}*/
 </style>

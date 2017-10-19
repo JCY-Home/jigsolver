@@ -23,8 +23,8 @@ export default {
     return {
       instructions: 'Rearrange the pieces to complete the puzzle!',
       items: [
-        'Click the piece you want to move',
-        'It will go to the empty spot'
+        'Drag and drop the piece you want to move in the empty spot',
+        'Keep moving pieces until you solve the image!'
       ]
     }
   }
