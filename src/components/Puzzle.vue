@@ -1,18 +1,45 @@
 <template>
 	<div class="puzzle">
+		<!-- <draggable v-model="myArray" :options="{draggable:'.item'}">
+			<div v-for="element in myArray" :key="element.id" class="item">
+				{{element.name}}
+			</div>
+		</draggable> -->
 		<div class="board">
-			<img v-for="n in 15" :src="require('@/assets/pieces/' + 'piece' + n + '.png')" @click="trigger"/>
-			<span class="blank"></span>
+			<draggable :options="{draggable:'.piece'}">
+				<img v-for="n in 15" :src="require('@/assets/pieces/' + 'piece' + n + '.png')" class="piece"/>
+				<span class="piece blank"></span>
+			</draggable>
 		</div>
+		
 	</div>
 </template>
 
 <script>
+import draggable from 'vuedraggable';
+
 export default {
 	name: 'Puzzle',
 	data() {
 		return {
-			isAdjacent: false
+			isAdjacent: false,
+			myArray: [
+				{
+					"name": 'justin',
+					"order": 1,
+					"fixed": false
+				},
+				{
+					"name": 'camille',
+					"order": 3,
+					"fixed": false
+				},
+				{
+					"name": 'nick',
+					"order": 2,
+					"fixed": false
+				}
+			],
 		}
 	},
 	methods: {
@@ -35,11 +62,19 @@ export default {
 				console.log('not adjacent');
 			}
 		}
-	}
+	},
+	components: {
+		draggable,
+	},
 }
 </script>
 
 <style scoped>
+.item {
+	border: 1px solid #efefef;
+	width: 20%;
+	margin: 10px auto;
+}
 .board {
 	width: 980px;
 	column-count: 4;
