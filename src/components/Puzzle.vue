@@ -38,6 +38,37 @@ export default {
 	        });
 			this.layout = puzzleArr;
 		},
+		// dragStart(index) {
+		// 	var dragItem = event.target;
+		// 	event.dataTransfer.setData("URL", dragItem.src);
+		// 	event.dataTransfer.setData("text", index);
+		// 	event.dataTransfer.effectAllowed = 'move';
+		// },
+		// dragEnter() {
+		// 	console.log('enter event');
+		// },
+		// dragOver() {
+		// 	console.log('enter event');
+		// },
+		// dropLeave(index) {
+		// 	var dragItem = event.target;
+		// 	let sIndex = event.dataTransfer.getData('text');
+		// 	let sURL = event.dataTransfer.getData('URL');
+		// 	let toURL = dragItem.src;
+		// 	this.layout.$set(sIndex, toURL);
+		// 	this.layout.$set(index, sURL);
+		// 	this.isSuccess();
+		// },
+		// isSuccess() {
+		// 	let puzzleArr = this.layout;
+		// 	let isPass = puzzleArr.every((e, i) => e.substr(-5,1) == i + 1);
+
+		// 	if(isPass) {
+		// 		setTimeout(function() {
+		// 			alert('no idea what this is');
+		// 		})
+		// 	}
+		// }
 	},
 	beforeMount() {
 		this.render()
