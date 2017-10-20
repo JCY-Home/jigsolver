@@ -6,11 +6,9 @@
 			</div>
 		</draggable> -->
 		<div class="board">
-			<draggable v-model="layout" :options="{draggable:'.puzzlePiece'}">
-				<div v-for="piece in layout" :key="piece.id" class="puzzlePiece">
-					<img :src="piece"/>
-				</div>
-			</draggable>
+			<div v-for="piece in layout" :key="piece.id" class="puzzlePiece">
+				<img :src="piece"/>
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -24,10 +22,17 @@ export default {
 	data() {
 		return {
 			layout: [],
+			position: {
+				'sourceEl': '',
+				'sourceIndex': '',
+				'destEl': '',
+				'destIndex': ''
+
+			},
 		}
 	},
 	methods: {
-		render() {
+		render: function() {
 			var puzzleArr = [],
 			    i = 1;
 			for(i; i < 17; i++) {
@@ -37,6 +42,21 @@ export default {
 	            return Math.random() - 0.5;
 	        });
 			this.layout = puzzleArr;
+		},
+		checkIndex: function(evt) {
+			this.position.sourceEl = evt.draggedContext.element;
+			this.position.sourceIndex = evt.draggedContext.index;
+			this.position.destEl = evt.relatedContext.element;
+			this.position.destIndex = evt.relatedContext.index;
+			console.log(this.position.sourceEl);
+		},
+		switchEl: function() {
+			var temp = this.layout[this.position.sourceIndex];
+			this.layout[this.position.sourceIndex] = this.layout[this.position.destIndex];
+			this.layout[this.position.destIndex] = temp;
+		},
+		onUpdate: function() {
+			return;
 		},
 		// dragStart(index) {
 		// 	var dragItem = event.target;
