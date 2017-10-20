@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png"/>
+    <img src="./assets/logo.png" class="vue-logo"/>
     <div class="top">
       <h4 v-text="instructions"></h4>
       <ol>
@@ -23,7 +23,7 @@ export default {
     return {
       instructions: 'Rearrange the pieces to complete the puzzle!',
       items: [
-        'Drag and drop the piece you want to move in the empty spot',
+        'Drag and drop the pieces one at a time',
         'Keep moving pieces until you solve the image!'
       ]
     }
@@ -43,6 +43,9 @@ export default {
 .top {
   width: 300px;
   margin: 0 auto 30px auto;
+}
+.vue-logo {
+  width: 100px;
 }
 .top ol {
   text-align: left;
