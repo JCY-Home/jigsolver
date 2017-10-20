@@ -18,13 +18,13 @@ sudo npm install
 `npm run dev`
 
 this will serve the page at **localhost:8080** by default.
-all assets for dev live in the `src/` folder.
+all assets for dev live in the `./src/` folder.
 
 for deployment:
 
 `npm run build`
 
-### implementation:
+#### implementation:
 
 Puzzle board is based on a 900x900-px image, divided into 16 equal pieces of 225x255-px each. Image pieces live in ./static/pieces, and must be named "piece1.png, piece2.png, etc" (for now)
 
