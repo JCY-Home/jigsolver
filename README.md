@@ -24,6 +24,8 @@ for deployment:
 
 `npm run build`
 
+### implementation:
+
 Puzzle board is based on a 900x900-px image, divided into 16 equal pieces of 225x255-px each. Image pieces live in ./static/pieces, and must be named "piece1.png, piece2.png, etc" (for now)
 
 Drag-and-drop functionality uses only Vue, the HTML5 DnD API, and vanilla JS (no jQuery)
