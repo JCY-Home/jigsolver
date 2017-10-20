@@ -6,7 +6,10 @@
 			</div>
 		</draggable> -->
 		<div class="board">
-			<div v-for="piece in layout" :key="piece.id" class="puzzlePiece">
+			<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzlePiece" v-on:dragstart = "dragStart($index)"
+			v-on:dragenter.prevent = "dragEnter"
+			v-on:dragover.prevent = "dragOver"
+			v-on:drop.prevent = "dropLeave($index)">
 				<img :src="piece"/>
 			</div>
 			<div class="clearfix"></div>
@@ -15,20 +18,11 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-
 export default {
 	name: 'Puzzle',
 	data() {
 		return {
 			layout: [],
-			position: {
-				'sourceEl': '',
-				'sourceIndex': '',
-				'destEl': '',
-				'destIndex': ''
-
-			},
 		}
 	},
 	methods: {
@@ -43,58 +37,71 @@ export default {
 	        });
 			this.layout = puzzleArr;
 		},
-		checkIndex: function(evt) {
-			this.position.sourceEl = evt.draggedContext.element;
-			this.position.sourceIndex = evt.draggedContext.index;
-			this.position.destEl = evt.relatedContext.element;
-			this.position.destIndex = evt.relatedContext.index;
-			console.log(this.position.sourceEl);
-		},
+		// handleDragStart: function(e) {
+		// 	var dragSrcEl = this;
+
+		// 	e.dataTransfer.effectAllowed = 'move';
+		// 	e.dataTransfer.setData('text/html', this.innerHTML);
+		// },
+		// handleDragOver: function(e) {
+		// 	if (e.preventDefault) {
+		// 		e.preventDefault();
+		// 	}
+		// 	e.dataTransfer.dropEffect = 'move';
+
+		// 	return false;
+		// },
+		// handleDrop: function(e) {
+		// 	if (e.stopPropagation) {
+		// 		e.stopPropagation();
+		// 	}
+		// 	if (this.handleDragStart.dragSrcEl != event.target) {
+		// 		this.handleDragStart.dragSrcEl.innerHTML = event.target.innerHTML;
+		// 		event.target.innerHTML = e.dataTransfer.getData('text/html');
+		// 	}
+
+		// 	return false;
+		// },
+
 		switchEl: function() {
 			var temp = this.layout[this.position.sourceIndex];
 			this.layout[this.position.sourceIndex] = this.layout[this.position.destIndex];
 			this.layout[this.position.destIndex] = temp;
 		},
-		onUpdate: function() {
-			return;
+		dragStart(index) {
+			var dragItem = event.target;
+			event.dataTransfer.setData("URL", dragItem.src);
+			event.dataTransfer.setData("text", index);
+			event.dataTransfer.effectAllowed = 'move';
 		},
-		// dragStart(index) {
-		// 	var dragItem = event.target;
-		// 	event.dataTransfer.setData("URL", dragItem.src);
-		// 	event.dataTransfer.setData("text", index);
-		// 	event.dataTransfer.effectAllowed = 'move';
-		// },
-		// dragEnter() {
-		// 	console.log('enter event');
-		// },
-		// dragOver() {
-		// 	console.log('enter event');
-		// },
-		// dropLeave(index) {
-		// 	var dragItem = event.target;
-		// 	let sIndex = event.dataTransfer.getData('text');
-		// 	let sURL = event.dataTransfer.getData('URL');
-		// 	let toURL = dragItem.src;
-		// 	this.layout.$set(sIndex, toURL);
-		// 	this.layout.$set(index, sURL);
-		// 	this.isSuccess();
-		// },
-		// isSuccess() {
-		// 	let puzzleArr = this.layout;
-		// 	let isPass = puzzleArr.every((e, i) => e.substr(-5,1) == i + 1);
+		dragEnter() {
+			// console.log('enter event');
+		},
+		dragOver() {
+			// console.log('enter event');
+		},
+		dropLeave(index) {
+			var dragItem = event.target;
+			let sIndex = event.dataTransfer.getData('text');
+			let sURL = event.dataTransfer.getData('URL');
+			let toURL = dragItem.src;
+			this.$set(this.layout, sIndex, toURL);
+			this.$set(this.layout, index, sURL);
+			this.isSuccess();
+		},
+		isSuccess() {
+			let puzzleArr = this.layout;
+			let isPass = puzzleArr.every((e, i) => e.substr(-5,1) == i + 1);
 
-		// 	if(isPass) {
-		// 		setTimeout(function() {
-		// 			alert('no idea what this is');
-		// 		})
-		// 	}
-		// }
+			if(isPass) {
+				setTimeout(function() {
+					alert('no idea what this is');
+				})
+			}
+		}
 	},
 	beforeMount() {
 		this.render()
-	},
-	components: {
-		draggable,
 	},
 }
 </script>
