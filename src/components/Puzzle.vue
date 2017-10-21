@@ -17,11 +17,12 @@ export default {
 	},
 	methods: {
 		build: function() {
-			var puzzleTemp = [],
-			    x = 1;
-			for(x; x < 17; x++) {
+			var puzzleTemp = [];
+
+			for(var x = 1; x < 17; x++) {
 				puzzleTemp.push("../static/pieces/piece" + x + ".png");
 			}
+
 			puzzleTemp = puzzleTemp.sort(function() {
 	      return Math.random() - 0.5;
 	    });
@@ -82,13 +83,14 @@ export default {
 	margin-bottom: 20px;
 }
 .puzzlePiece img {
-	-webkit-perspective: 1000;
-	-webkit-backface-visibility: hidden;
+	/*-webkit-perspective: 1000;
+	-webkit-backface-visibility: hidden;*/
 	transition: all 100ms ease-in-out;
 	cursor: pointer;
 }
 .puzzlePiece img:hover {
-	transform: translateY(-10px);
+	/*transform: translateY(-10px);*/
+	opacity: 0.7;
 }
 .over {
 	border: 3px dashed #f25f25;
