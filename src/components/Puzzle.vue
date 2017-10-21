@@ -16,7 +16,7 @@ export default {
 		}
 	},
 	methods: {
-		render: function() {
+		build: function() {
 			var puzzleTemp = [],
 			    x = 1;
 			for(x; x < 17; x++) {
@@ -60,7 +60,7 @@ export default {
 		},
 	},
 	beforeMount() {
-		this.render()
+		this.build()
 	},
 }
 </script>
