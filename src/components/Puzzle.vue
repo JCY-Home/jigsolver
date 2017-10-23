@@ -139,7 +139,8 @@ export default {
 	pointer-events: none;
 }
 .winner {
-	color: #00d313 !important;
+	color: #3FFF07 !important;
+	text-shadow: 2px 2px 3px #000;
 	-webkit-animation: rotate-scale-up 0.65s linear 3 both;
 	        animation: rotate-scale-up 0.65s linear 3 both;
 }
@@ -183,14 +184,15 @@ export default {
 }
 .win-message {
 	position: absolute;
-	top: 350px;
-	left: 115px;
+	top: 360px;
+	left: 105px;
 	font-size: 150px;
 	font-weight: bold;
 	text-shadow: 5px 10px 10px #000;
-	color: #00d313;
+	color: #3FFF07;
 	opacity: 0;
 	z-index: -1;
+	transform: rotate(-25deg);
 }
 .win-show {
 	opacity: 1 !important;
