@@ -24,7 +24,7 @@ export default {
       instructions: 'Rearrange the pieces to complete the puzzle!',
       items: [
         'Drag and drop the pieces one at a time',
-        'Try to match each piece to the designer\'s name in as few guesses as possible!'
+        'Try to match each piece to the designer\'s name in less than 7 guesses!'
       ]
     }
   }
