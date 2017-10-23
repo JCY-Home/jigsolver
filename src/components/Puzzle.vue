@@ -6,6 +6,7 @@
 				<img :src="piece"/>
 			</div>
 			<labeler/>
+			<span class="win-message">YOU WIN!</span>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -112,6 +113,7 @@ export default {
 				this.tries += 1;
 				document.querySelector('.counter').classList.add('winner');
 				document.querySelector('.puzzle-wrap').classList.add('no-click');
+				document.querySelector('.win-message').classList.add('win-show');
 			} else {
 				this.tries += 1;
 				document.querySelector('.counter').classList.add('loser');
@@ -179,8 +181,21 @@ export default {
 .over {
 	border: 3px dashed #f25f25;
 }
-#label {
-
+.win-message {
+	position: absolute;
+	top: 350px;
+	left: 115px;
+	font-size: 150px;
+	font-weight: bold;
+	text-shadow: 5px 10px 10px #000;
+	color: #00d313;
+	opacity: 0;
+	z-index: -1;
+}
+.win-show {
+	opacity: 1 !important;
+	z-index: 500;
+	transition: all 2s ease-in-out;
 }
 .clearfix {
 	display: table;
