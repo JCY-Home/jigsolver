@@ -1,5 +1,5 @@
 # jigsolver
-A drag-and-drop jigsaw puzzle solver app in Vue.js
+A drag-and-drop puzzle solver app in Vue.js
 
 #### setup:
 1. clone the repo
