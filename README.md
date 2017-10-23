@@ -1,7 +1,7 @@
 # jigsolver
 A drag-and-drop puzzle solver app in Vue.js
 
-You will need git, Homebrew, and npm to run this app.
+Mac OSX users will need git, Homebrew, and npm to run this app.
 
 ##### Homebrew
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
@@ -40,4 +40,6 @@ Puzzle board is based on a 900x900-px image, divided into 9 equal pieces of 300x
 
 Drag-and-drop functionality uses only Vue, the HTML5 DnD API, and vanilla JS (no jQuery)
 
+#### instructions:
 
+Move the pieces one at a time to match the designer with the artwork. You have 7 guesses, choose wisely!
