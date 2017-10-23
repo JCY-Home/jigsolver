@@ -5,6 +5,7 @@ You will need git, Homebrew, and npm to run this app.
 
 ##### Homebrew
 `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
 (git will be installed with Homebrew if you don't already have it)
 
 ##### npm
