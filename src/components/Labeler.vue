@@ -10,15 +10,15 @@ export default {
 	data() {
 		return {
 			designers: [
-				'Cara',
-				'Sabrina',
-				'Zach',
-				'Chantal',
+				'Ricardo',
 				'Shannon',
 				'Phoebe',
+				'Zach',
+				'Chantal',
+				'Emma',
 				'Carl',
-				'Ricardo',
-				'Emma'
+				'Cara',
+				'Sabrina'
 			],
 		}
 	},

@@ -24,7 +24,8 @@ export default {
 		return {
 			layout: [],
 			isWon: false,
-			tries: 0
+			tries: 0,
+			wrongItems: {}
 		}
 	},
 	methods: {
@@ -42,26 +43,31 @@ export default {
 			this.layout = puzzleTemp;
 		},
 		checkWinState: function() {
-			if(this.isWon) { return; }
 			var doesWin = [
-			    document.getElementById('0').firstChild.getAttribute('src').indexOf('piece6') !== -1,
-			    document.getElementById('1').firstChild.getAttribute('src').indexOf('piece1') !== -1,
-			    document.getElementById('2').firstChild.getAttribute('src').indexOf('piece4') !== -1,
-			    document.getElementById('3').firstChild.getAttribute('src').indexOf('piece8') !== -1,
-			    document.getElementById('4').firstChild.getAttribute('src').indexOf('piece7') !== -1,
-			    document.getElementById('5').firstChild.getAttribute('src').indexOf('piece3') !== -1,
-			    document.getElementById('6').firstChild.getAttribute('src').indexOf('piece9') !== -1,
-			    document.getElementById('7').firstChild.getAttribute('src').indexOf('piece2') !== -1,
-			    document.getElementById('8').firstChild.getAttribute('src').indexOf('piece5') !== -1
-			];
+			    document.getElementById('0').firstChild.getAttribute('src').indexOf('piece2') !== -1,
+			    document.getElementById('1').firstChild.getAttribute('src').indexOf('piece7') !== -1,
+			    document.getElementById('2').firstChild.getAttribute('src').indexOf('piece3') !== -1,
+			    document.getElementById('3').firstChild.getAttribute('src').indexOf('piece4') !== -1,
+			    document.getElementById('4').firstChild.getAttribute('src').indexOf('piece8') !== -1,
+			    document.getElementById('5').firstChild.getAttribute('src').indexOf('piece9') !== -1,
+			    document.getElementById('6').firstChild.getAttribute('src').indexOf('piece5') !== -1,
+			    document.getElementById('7').firstChild.getAttribute('src').indexOf('piece6') !== -1,
+			    document.getElementById('8').firstChild.getAttribute('src').indexOf('piece1') !== -1
+			    ],
+			    winChecker = doesWin.every(allAreTrue),
+			    wrongOnes = doesWin.every(whichAreFalse);
+
 			function allAreTrue(element, index, array) {
 				return element === true;
 			}
-			var checker = doesWin.every(allAreTrue);
-			if(!checker) {
-				// console.log("doesn't win");
+			function whichAreFalse(element, index, array) {
+				return element === false;
+			}
+
+			if(!winChecker) {
+				console.log("game lost");
 			} else {
-				// console.log("game won");
+				console.log("game won");
 				this.isWon = true;
 			}
 			// var flag = false;
@@ -117,7 +123,7 @@ export default {
 			} else {
 				this.tries += 1;
 				document.querySelector('.counter').classList.add('loser');
-				document.querySelector('.puzzle-wrap').classList.add('no-click');
+			    document.querySelector('.puzzle-wrap').classList.add('no-click');
 			}
 		},
 	},
@@ -140,7 +146,6 @@ export default {
 }
 .winner {
 	color: #3FFF07 !important;
-	text-shadow: 2px 2px 3px #000;
 	-webkit-animation: rotate-scale-up 0.65s linear 3 both;
 	        animation: rotate-scale-up 0.65s linear 3 both;
 }
@@ -152,6 +157,7 @@ export default {
 .winner, .loser {
 	font-size: 32px;
 	font-weight: bold;
+	text-shadow: 1px 2px 3px #000;
 }
 .board {
 	position: relative;
