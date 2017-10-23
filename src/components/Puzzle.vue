@@ -49,8 +49,8 @@ export default {
 			    document.getElementById('2').firstChild.getAttribute('src').indexOf('piece3') !== -1,
 			    document.getElementById('3').firstChild.getAttribute('src').indexOf('piece4') !== -1,
 			    document.getElementById('4').firstChild.getAttribute('src').indexOf('piece8') !== -1,
-			    document.getElementById('5').firstChild.getAttribute('src').indexOf('piece9') !== -1,
-			    document.getElementById('6').firstChild.getAttribute('src').indexOf('piece5') !== -1,
+			    document.getElementById('5').firstChild.getAttribute('src').indexOf('piece5') !== -1,
+			    document.getElementById('6').firstChild.getAttribute('src').indexOf('piece9') !== -1,
 			    document.getElementById('7').firstChild.getAttribute('src').indexOf('piece6') !== -1,
 			    document.getElementById('8').firstChild.getAttribute('src').indexOf('piece1') !== -1
 			    ],
