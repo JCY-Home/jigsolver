@@ -1,10 +1,13 @@
 <template>
-	<div class="board">
-		<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzlePiece" @dragstart="handleDragStart($index)" @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop($index)">
-			<img :src="piece"/>
+	<div class="puzzle-wrap">
+		<span v-model="tries" class="counter">Number of tries: {{ tries }}</span>
+		<div class="board">
+			<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzlePiece" @dragstart="handleDragStart($index)" @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop($index)" @dragend.prevent="handleDragEnd" :id="$index">
+				<img :src="piece"/>
+			</div>
+			<labeler/>
+			<div class="clearfix"></div>
 		</div>
-		<labeler/>
-		<div class="clearfix"></div>
 	</div>
 </template>
 
@@ -19,6 +22,8 @@ export default {
 	data() {
 		return {
 			layout: [],
+			isWon: false,
+			tries: 0
 		}
 	},
 	methods: {
@@ -34,6 +39,40 @@ export default {
 	    });
 
 			this.layout = puzzleTemp;
+		},
+		checkWinState: function() {
+			if(this.isWon) { return; }
+			var doesWin = [
+			    document.getElementById('0').firstChild.getAttribute('src').indexOf('piece6') !== -1,
+			    document.getElementById('1').firstChild.getAttribute('src').indexOf('piece1') !== -1,
+			    document.getElementById('2').firstChild.getAttribute('src').indexOf('piece4') !== -1,
+			    document.getElementById('3').firstChild.getAttribute('src').indexOf('piece8') !== -1,
+			    document.getElementById('4').firstChild.getAttribute('src').indexOf('piece7') !== -1,
+			    document.getElementById('5').firstChild.getAttribute('src').indexOf('piece3') !== -1,
+			    document.getElementById('6').firstChild.getAttribute('src').indexOf('piece9') !== -1,
+			    document.getElementById('7').firstChild.getAttribute('src').indexOf('piece2') !== -1,
+			    document.getElementById('8').firstChild.getAttribute('src').indexOf('piece5') !== -1
+			];
+			function allAreTrue(element, index, array) {
+				return element === true;
+			}
+			var checker = doesWin.every(allAreTrue);
+			if(!checker) {
+				console.log("doesn't win");
+			} else {
+				console.log("game won");
+				this.isWon = true;
+			}
+			// var flag = false;
+			// for(var i = 0; i < doesWin.length; i++) {
+			// 	doesWin[i] === false ? (flag = true) : (flag = false);
+			// }
+			// if(!flag) {
+			// 	this.isWon = true;
+			// 	console.log('game won')
+			// } else {
+			// 	console.log('doesn\'t win');
+			// }
 		},
 		handleDragStart: function(index) {
 			var dragItem = event.target;
@@ -65,6 +104,19 @@ export default {
 				dragItem.classList.remove('over');
 			}
 		},
+		handleDragEnd: function() {
+			this.checkWinState();
+			if(!this.isWon && this.tries < 6) {
+				this.tries += 1;
+			} else if(this.isWon && this.tries <= 6) {
+				document.querySelector('.counter').classList.add('winner');
+				document.querySelector('.puzzle-wrap').classList.add('no-click');
+			} else {
+				this.tries += 1;
+				document.querySelector('.counter').classList.add('loser');
+				document.querySelector('.puzzle-wrap').classList.add('no-click');
+			}
+		},
 	},
 	beforeMount() {
 		this.build()
@@ -73,6 +125,25 @@ export default {
 </script>
 
 <style scoped>
+.counter {
+	display: inline-block;
+	font-size: 28px;
+	margin-bottom: 20px;
+
+}
+.no-click {
+	pointer-events: none;
+}
+.winner {
+	color: #00d313 !important;
+}
+.loser {
+	color: #ff0707 !important;
+}
+.winner, .loser {
+	font-size: 32px;
+	font-weight: bold;
+}
 .board {
 	position: relative;
 	width: 930px;

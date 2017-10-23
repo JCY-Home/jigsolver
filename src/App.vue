@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" class="vue-logo"/>
+    <img src="../static/TR-Logo.png" class="tr-logo"/>
     <div class="top">
       <h4 v-text="instructions"></h4>
       <ol>
@@ -24,7 +24,7 @@ export default {
       instructions: 'Rearrange the pieces to complete the puzzle!',
       items: [
         'Drag and drop the pieces one at a time',
-        'Keep moving pieces until you solve the image!'
+        'Try to match each piece to the designer\'s name in as few guesses as possible!'
       ]
     }
   }
@@ -44,8 +44,9 @@ export default {
   width: 300px;
   margin: 0 auto 30px auto;
 }
-.vue-logo {
+.tr-logo {
   width: 100px;
+  height: 96px;
 }
 .top ol {
   text-align: left;
