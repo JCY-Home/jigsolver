@@ -3,13 +3,19 @@
 		<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzlePiece" @dragstart="handleDragStart($index)" @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop($index)">
 			<img :src="piece"/>
 		</div>
+		<labeler/>
 		<div class="clearfix"></div>
 	</div>
 </template>
 
 <script>
+import Labeler from '../components/Labeler'
+
 export default {
 	name: 'Puzzle',
+	components: {
+		Labeler
+	},
 	data() {
 		return {
 			layout: [],
@@ -19,8 +25,8 @@ export default {
 		build: function() {
 			var puzzleTemp = [];
 
-			for(var x = 1; x < 17; x++) {
-				puzzleTemp.push("../static/pieces/piece" + x + ".png");
+			for(var x = 1; x < 10; x++) {
+				puzzleTemp.push("../static/tr-pieces/piece" + x + ".png");
 			}
 
 			puzzleTemp = puzzleTemp.sort(function() {
@@ -68,7 +74,8 @@ export default {
 
 <style scoped>
 .board {
-	width: 940px;
+	position: relative;
+	width: 930px;
 	border: 1px solid #000;
 	background-color: #808080;
 	padding: 10px;
@@ -76,11 +83,11 @@ export default {
 }
 .puzzlePiece {
 	float: left;
-	width: 225px;
-	height: 225px;
+	width: 300px;
+	height: 300px;
 	margin-right: 5px;
 	margin-left: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 40px;
 }
 .puzzlePiece img {
 	/*-webkit-perspective: 1000;
@@ -94,6 +101,9 @@ export default {
 }
 .over {
 	border: 3px dashed #f25f25;
+}
+#label {
+
 }
 .clearfix {
 	display: table;
