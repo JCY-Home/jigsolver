@@ -58,9 +58,9 @@ export default {
 			}
 			var checker = doesWin.every(allAreTrue);
 			if(!checker) {
-				console.log("doesn't win");
+				// console.log("doesn't win");
 			} else {
-				console.log("game won");
+				// console.log("game won");
 				this.isWon = true;
 			}
 			// var flag = false;
@@ -109,6 +109,7 @@ export default {
 			if(!this.isWon && this.tries < 6) {
 				this.tries += 1;
 			} else if(this.isWon && this.tries <= 6) {
+				this.tries += 1;
 				document.querySelector('.counter').classList.add('winner');
 				document.querySelector('.puzzle-wrap').classList.add('no-click');
 			} else {
