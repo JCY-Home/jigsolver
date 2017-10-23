@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
 .board {
-	width: 980px;
+	width: 940px;
 	border: 1px solid #000;
 	background-color: #808080;
 	padding: 10px;
@@ -78,9 +78,9 @@ export default {
 	float: left;
 	width: 225px;
 	height: 225px;
-	margin-right: 10px;
-	margin-left: 10px;
-	margin-bottom: 20px;
+	margin-right: 5px;
+	margin-left: 5px;
+	margin-bottom: 10px;
 }
 .puzzlePiece img {
 	/*-webkit-perspective: 1000;
