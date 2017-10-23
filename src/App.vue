@@ -6,6 +6,7 @@
       <ul>
         <li v-for="item in items">{{ item }}</li>
       </ul>
+      <span class="bold">Hint:</span><span> The completed picture shows the TR logo!</span>
     </div>
     <puzzle/>
   </div>
@@ -51,5 +52,8 @@ export default {
   text-align: center;
   list-style: none;
   padding-left: 0;
+}
+.bold {
+  font-weight: bold;
 }
 </style>
