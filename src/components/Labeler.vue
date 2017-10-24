@@ -31,39 +31,39 @@ export default {
 	color: #fff;
 }
 p[data-order="1"] {
-	top: 302px;
-	left: 145px;
+	top: 203px;
+	left: 82px;
 }
 p[data-order="2"] {
-	top: 302px;
-	left: 445px;
+	top: 203px;
+	left: 296px;
 }
 p[data-order="3"] {
-	top: 302px;
-	left: 760px;
+	top: 203px;
+	left: 508px;
 }
 p[data-order="4"] {
-	top: 642px;
-	left: 145px;
+	top: 440px;
+	left: 82px;
 }
 p[data-order="5"] {
-	top: 642px;
-	left: 445px;
+	top: 440px;
+	left: 296px;
 }
 p[data-order="6"] {
-	top: 642px;
-	left: 760px;
+	top: 440px;
+	left: 508px;
 }
 p[data-order="7"] {
-	top: 985px;
-	left: 145px;
+	top: 680px;
+	left: 82px;
 }
 p[data-order="8"] {
-	top: 985px;
-	left: 445px;
+	top: 680px;
+	left: 296px;
 }
 p[data-order="9"] {
-	top: 985px;
-	left: 760px;
+	top: 680px;
+	left: 508px;
 }
 </style>

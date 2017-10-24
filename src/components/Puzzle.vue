@@ -186,7 +186,7 @@ export default {
 }
 .board {
 	position: relative;
-	width: 930px;
+	width: 630px;
 	border: 1px solid #000;
 	background-color: #808080;
 	padding: 10px;
@@ -194,8 +194,8 @@ export default {
 }
 .puzzle-piece {
 	float: left;
-	width: 300px;
-	height: 300px;
+	width: 200px;
+	height: 200px;
 	margin-right: 5px;
 	margin-left: 5px;
 	margin-bottom: 40px;
