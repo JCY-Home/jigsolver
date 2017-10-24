@@ -1,18 +1,16 @@
 <template>
 	<div class="puzzle-wrap">
-		<span v-model="tries" class="counter">Number of tries: {{ tries }}</span>
+		<span v-model="tries" v-if="isWon === false && isLost === false" class="counter">Tries so far: {{ tries }}</span>
+		<span v-model="tries" v-else class="counter">Final count: {{ tries }}</span>
 		<div class="board">
 			<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzle-piece" @dragstart="handleDragStart($index)" @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop($index)" @dragend.prevent="handleDragEnd" :id="$index">
 				<img :src="piece"/>
 			</div>
 			<labeler/>
 			<div class="clearfix"></div>
-			<div class="win-box" @click="reloadPage">
-				<span>You win!<br>Play again?</span>
-			</div>
-			<div class="lose-box" @click="reloadPage">
-				<span>You lost...<br>Play again?</span>
-			</div>
+			<span v-if="isWon === true" @click="reloadPage" class="win-box">You win!<br>Play again?</span>
+			<span v-else-if="isLost === true" @click="reloadPage" class="lose-box">You lost...<br>Play again?</span>
+			<span v-else class="win-box" style="opacity:0;z-index:-1;"></span>
 		</div>
 	</div>
 </template>
@@ -32,7 +30,7 @@ export default {
 			dropTarget: '',
 			tries: 0,
 			isWon: false,
-			wrongItems: {}
+			isLost: false
 		}
 	},
 	methods: {
@@ -61,33 +59,23 @@ export default {
 			    document.getElementById('7').firstChild.getAttribute('src').indexOf('piece6') !== -1,
 			    document.getElementById('8').firstChild.getAttribute('src').indexOf('piece1') !== -1
 			    ],
-			    winChecker = doesWin.every(allAreTrue),
-			    wrongOnes = doesWin.every(whichAreFalse);
+			    winChecker = doesWin.every(allAreTrue);
+			    // wrongOnes = doesWin.every(whichAreFalse);
 
 			function allAreTrue(element, index, array) {
 				return element === true;
 			}
-			function whichAreFalse(element, index, array) {
-				return element === false;
-			}
+			// function whichAreFalse(element, index, array) {
+			// 	return element === false;
+			// }
 
 			if(!winChecker) {
-				console.log("turn taken");
+				// console.log("turn taken");
 				this.dropTarget = '';
 			} else {
-				console.log("game won");
+				// console.log("game won");
 				this.isWon = true;
 			}
-			// var flag = false;
-			// for(var i = 0; i < doesWin.length; i++) {
-			// 	doesWin[i] === false ? (flag = true) : (flag = false);
-			// }
-			// if(!flag) {
-			// 	this.isWon = true;
-			// 	console.log('game won')
-			// } else {
-			// 	console.log('doesn\'t win');
-			// }
 		},
 		handleDragStart: function(index) {
 			this.dragTarget = event.target;
@@ -109,7 +97,7 @@ export default {
 			}
 		},
 		handleDrop: function(index) {
-			console.log('FIRE DROP!');
+			// console.log('FIRE DROP!');
 			this.dropTarget = event.target;
 		    var sourceIndex = event.dataTransfer.getData('text'),
 		        sourceURL = event.dataTransfer.getData('URL'),
@@ -122,7 +110,7 @@ export default {
 		},
 		handleDragEnd: function() {
 			// console.log(this.dragTarget);
-			console.log(this.dropTarget);
+			// console.log(this.dropTarget);
 			if(this.dragTarget === this.dropTarget || !this.dropTarget) {
 				// console.log('NO TURN TAKEN');
 				return;
@@ -133,21 +121,20 @@ export default {
 			} else if(this.isWon && this.tries <= 6) {
 				this.tries += 1;
 				document.querySelector('.counter').classList.add('winner');
-				document.querySelector('.win-box').classList.add('show');
-				var draggyPieces = document.getElementsByClassName('puzzle-piece');
-			    for(var p = 0; p < draggyPieces.length; p++) {
-			    	draggyPieces[p].classList.add('game-over');
-			    }
+				this.addClassToWholeClass('puzzle-piece');
 			} else {
 				this.tries += 1;
+				this.isLost = true;
 				document.querySelector('.counter').classList.add('loser');
-			    document.querySelector('.lose-box').classList.add('show');
-			    var draggyPieces = document.getElementsByClassName('puzzle-piece');
-			    for(var p = 0; p < draggyPieces.length; p++) {
-			    	draggyPieces[p].classList.add('game-over');
-			    }
+			    this.addClassToWholeClass('puzzle-piece');
 			}
 		},
+		addClassToWholeClass: function(element) {
+	    	var allElems = document.getElementsByClassName(element);
+	    	for(var p = 0; p < allElems.length; p++) {
+	    		allElems[p].classList.add('game-over');
+	    	}
+	    },
 		reloadPage: function() {
 			window.location.reload();
 		}
@@ -223,29 +210,25 @@ export default {
 	-ms-user-select: none;
 }
 .win-box {
+	display: block;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 250px;
 	height: 100px;
-	text-shadow: 5px 10px 10px #000;
 	background-color: #FFF;
 	border: 2px solid #2bbd00;
 	box-shadow: 2px 3px 12px #000;
-	opacity: 0;
-	z-index: -1;
+	/*opacity: 0;*/
+	z-index: 500;
 	cursor: pointer;
-}
-.win-box > span {
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-	display: block;
 	font-size: 30px;
 	font-weight: bold;
 	color: #2bbd00;
-	text-shadow: none;
+	line-height: 1;
+	padding-top: 30px;
+	transition: all 1s ease-in;
 }
 .lose-box {
 	position: absolute;
@@ -258,24 +241,16 @@ export default {
 	background-color: #FFF;
 	border: 2px solid #EC0202;
 	box-shadow: 2px 3px 12px #000;
-	opacity: 0;
-	z-index: -1;
+	/*opacity: 0;*/
+	z-index: 500;
 	cursor: pointer;
-}
-.lose-box > span {
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-	display: block;
 	font-size: 30px;
 	font-weight: bold;
 	color: #EC0202;
 	text-shadow: none;
-}
-.show {
-	opacity: 1 !important;
-	z-index: 500;
-	transition: all 2s ease-in-out;
+	line-height: 1;
+	padding-top: 30px;
+	transition: all 1s ease-in;
 }
 .clearfix {
 	display: table;

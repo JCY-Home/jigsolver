@@ -31,15 +31,15 @@ export default {
 	color: #fff;
 }
 p[data-order="1"] {
-	top: 203px;
+	top: 198px;
 	left: 82px;
 }
 p[data-order="2"] {
-	top: 203px;
+	top: 198px;
 	left: 296px;
 }
 p[data-order="3"] {
-	top: 203px;
+	top: 198px;
 	left: 508px;
 }
 p[data-order="4"] {

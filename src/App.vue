@@ -39,10 +39,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 60px 0;
+  margin: 10px 0;
 }
 .top {
   margin: 0 auto 30px auto;
+}
+.top h4 {
+  margin-bottom: 0;
 }
 .tr-logo {
   width: 100px;
@@ -52,6 +55,7 @@ export default {
   text-align: center;
   list-style: none;
   padding-left: 0;
+  margin-top: 0;
 }
 .bold {
   font-weight: bold;
