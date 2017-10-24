@@ -2,12 +2,17 @@
 	<div class="puzzle-wrap">
 		<span v-model="tries" class="counter">Number of tries: {{ tries }}</span>
 		<div class="board">
-			<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzlePiece" @dragstart="handleDragStart($index)" @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop($index)" @dragend.prevent="handleDragEnd" :id="$index">
+			<div v-for="(piece, $index) in layout" :key="piece.id" class="puzzle-piece" @dragstart="handleDragStart($index)" @dragenter.prevent="handleDragEnter" @dragover.prevent="handleDragOver" @dragleave.prevent="handleDragLeave" @drop.prevent="handleDrop($index)" @dragend.prevent="handleDragEnd" :id="$index">
 				<img :src="piece"/>
 			</div>
 			<labeler/>
-			<span class="win-message">YOU WIN!</span>
 			<div class="clearfix"></div>
+			<div class="win-box" @click="reloadPage">
+				<span>You win!<br>Play again?</span>
+			</div>
+			<div class="lose-box" @click="reloadPage">
+				<span>You lost...<br>Play again?</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -23,8 +28,10 @@ export default {
 	data() {
 		return {
 			layout: [],
-			isWon: false,
+			dragTarget: '',
+			dropTarget: '',
 			tries: 0,
+			isWon: false,
 			wrongItems: {}
 		}
 	},
@@ -65,7 +72,8 @@ export default {
 			}
 
 			if(!winChecker) {
-				console.log("game lost");
+				console.log("turn taken");
+				this.dropTarget = '';
 			} else {
 				console.log("game won");
 				this.isWon = true;
@@ -82,50 +90,67 @@ export default {
 			// }
 		},
 		handleDragStart: function(index) {
-			var dragItem = event.target;
+			this.dragTarget = event.target;
 			// event.dataTransfer.setData("URL", dragItem.src);
 			event.dataTransfer.setData("text", index);
 			event.dataTransfer.effectAllowed = 'move';
 		},
 		handleDragEnter: function() {
 			var enteredItem = event.target;
-			enteredItem.classList.add('over');
+			enteredItem.classList.add('drag-over');
 		},
 		handleDragOver: function() {
 			// console.log('over has fired');
 		},
 		handleDragLeave: function() {
 			var leftItem = event.target;
-			if(leftItem.classList.contains('over')) {
-				leftItem.classList.remove('over');
+			if(leftItem.classList.contains('drag-over')) {
+				leftItem.classList.remove('drag-over');
 			}
 		},
 		handleDrop: function(index) {
-			var dragItem = event.target,
-			    sourceIndex = event.dataTransfer.getData('text'),
-			    sourceURL = event.dataTransfer.getData('URL'),
-			    destURL = dragItem.src;
+			console.log('FIRE DROP!');
+			this.dropTarget = event.target;
+		    var sourceIndex = event.dataTransfer.getData('text'),
+		        sourceURL = event.dataTransfer.getData('URL'),
+		        destURL = this.dropTarget.src;
 			this.$set(this.layout, sourceIndex, destURL);
 			this.$set(this.layout, index, sourceURL);
-			if(dragItem.classList.contains('over')) {
-				dragItem.classList.remove('over');
+			if(this.dropTarget.classList.contains('drag-over')) {
+				this.dropTarget.classList.remove('drag-over');
 			}
 		},
 		handleDragEnd: function() {
+			// console.log(this.dragTarget);
+			console.log(this.dropTarget);
+			if(this.dragTarget === this.dropTarget || !this.dropTarget) {
+				// console.log('NO TURN TAKEN');
+				return;
+			}
 			this.checkWinState();
 			if(!this.isWon && this.tries < 6) {
 				this.tries += 1;
 			} else if(this.isWon && this.tries <= 6) {
 				this.tries += 1;
 				document.querySelector('.counter').classList.add('winner');
-				document.querySelector('.puzzle-wrap').classList.add('no-click');
-				document.querySelector('.win-message').classList.add('win-show');
+				document.querySelector('.win-box').classList.add('show');
+				var draggyPieces = document.getElementsByClassName('puzzle-piece');
+			    for(var p = 0; p < draggyPieces.length; p++) {
+			    	draggyPieces[p].classList.add('game-over');
+			    }
 			} else {
 				this.tries += 1;
 				document.querySelector('.counter').classList.add('loser');
-			    document.querySelector('.puzzle-wrap').classList.add('no-click');
+			    document.querySelector('.lose-box').classList.add('show');
+			    var draggyPieces = document.getElementsByClassName('puzzle-piece');
+			    for(var p = 0; p < draggyPieces.length; p++) {
+			    	draggyPieces[p].classList.add('game-over');
+			    }
 			}
 		},
+		reloadPage: function() {
+			window.location.reload();
+		}
 	},
 	beforeMount() {
 		this.build()
@@ -167,7 +192,7 @@ export default {
 	padding: 10px;
 	margin: 0 auto;
 }
-.puzzlePiece {
+.puzzle-piece {
 	float: left;
 	width: 300px;
 	height: 300px;
@@ -175,32 +200,79 @@ export default {
 	margin-left: 5px;
 	margin-bottom: 40px;
 }
-.puzzlePiece img {
+.puzzle-piece img {
 	/*-webkit-perspective: 1000;
 	-webkit-backface-visibility: hidden;*/
 	transition: all 100ms ease-in-out;
 	cursor: pointer;
 }
-.puzzlePiece img:hover {
+.puzzle-piece img:hover {
 	/*transform: translateY(-10px);*/
 	opacity: 0.7;
 }
-.over {
+.drag-over {
 	border: 3px dashed #f25f25;
 }
-.win-message {
+.game-over {
+	pointer-events: none;
+	user-drag: none; 
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+.win-box {
 	position: absolute;
-	top: 360px;
-	left: 105px;
-	font-size: 150px;
-	font-weight: bold;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 250px;
+	height: 100px;
 	text-shadow: 5px 10px 10px #000;
-	color: #3FFF07;
+	background-color: #FFF;
+	border: 2px solid #2bbd00;
+	box-shadow: 2px 3px 12px #000;
 	opacity: 0;
 	z-index: -1;
-	transform: rotate(-25deg);
+	cursor: pointer;
 }
-.win-show {
+.win-box > span {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	display: block;
+	font-size: 30px;
+	font-weight: bold;
+	color: #2bbd00;
+	text-shadow: none;
+}
+.lose-box {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 250px;
+	height: 100px;
+	text-shadow: 5px 10px 10px #000;
+	background-color: #FFF;
+	border: 2px solid #EC0202;
+	box-shadow: 2px 3px 12px #000;
+	opacity: 0;
+	z-index: -1;
+	cursor: pointer;
+}
+.lose-box > span {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	display: block;
+	font-size: 30px;
+	font-weight: bold;
+	color: #EC0202;
+	text-shadow: none;
+}
+.show {
 	opacity: 1 !important;
 	z-index: 500;
 	transition: all 2s ease-in-out;
